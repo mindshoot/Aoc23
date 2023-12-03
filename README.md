@@ -13,3 +13,7 @@ eg should the numbers from `twone3` be `23`, `213`, `13` or something else.
   
   My initial guess was wrong - overlapping words are all counted.
 </details>
+
+## Day 2
+
+Much more straightforward today. 
