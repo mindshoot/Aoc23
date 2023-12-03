@@ -17,3 +17,7 @@ eg should the numbers from `twone3` be `23`, `213`, `13` or something else.
 ## Day 2
 
 Much more straightforward today. 
+
+## Day 3
+
+Now I know how to get a rolling window of three items in an array. Thank you `itertools`
