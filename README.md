@@ -21,3 +21,7 @@ Much more straightforward today.
 ## Day 3
 
 Now I know how to get a rolling window of three items in an array. Thank you `itertools`
+
+## Day 4
+
+Short and sweet
