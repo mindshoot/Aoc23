@@ -25,3 +25,11 @@ Now I know how to get a rolling window of three items in an array. Thank you `it
 ## Day 4
 
 Short and sweet
+
+## Day 5
+
+Nightmare!
+
+## Day 6
+
+Luckily used the maths approach for the first half, which saved effort
