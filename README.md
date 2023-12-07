@@ -33,3 +33,7 @@ Nightmare!
 ## Day 6
 
 Luckily used the maths approach for the first half, which saved effort
+
+## Day 7
+
+Quite fiddly, but also quite fun, so ...

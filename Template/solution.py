@@ -20,8 +20,8 @@ def calculate_part_2(test=False):
 
 
 for part, function, test_result in [
-    (1, calculate_part_1, 35),
-    (2, calculate_part_2, 46),
+    (1, calculate_part_1, 0),
+    (2, calculate_part_2, 0),
 ]:
     test_answer = function(test=True)
     print(f"Part {part} (test) => {test_answer} (expecting {test_result})")
