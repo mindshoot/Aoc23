@@ -37,3 +37,10 @@ Luckily used the maths approach for the first half, which saved effort
 ## Day 7
 
 Quite fiddly, but also quite fun, so ...
+
+## Day 8
+
+Part 1 was deceptively easy. Part 2 was not going to succumb to brute force, 
+so other options were needed. This was the first one that felt like it needed
+some exploration and tyre-kicking to get the lay of the land to have a chance
+of solving.
