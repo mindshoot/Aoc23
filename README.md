@@ -44,3 +44,8 @@ Part 1 was deceptively easy. Part 2 was not going to succumb to brute force,
 so other options were needed. This was the first one that felt like it needed
 some exploration and tyre-kicking to get the lay of the land to have a chance
 of solving.
+
+## Day 9
+
+Like a refreshing palette-cleanser after the heavy meal that was day 8. Did it
+while the coffee machine was warming up. Part 2 thankfully not a nightmare.
