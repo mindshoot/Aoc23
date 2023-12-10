@@ -49,3 +49,7 @@ of solving.
 
 Like a refreshing palette-cleanser after the heavy meal that was day 8. Did it
 while the coffee machine was warming up. Part 2 thankfully not a nightmare.
+
+## Day 10
+
+I found the second part realllly hard. 
