@@ -53,3 +53,7 @@ while the coffee machine was warming up. Part 2 thankfully not a nightmare.
 ## Day 10
 
 I found the second part realllly hard. 
+
+## Day 11
+
+A bit fiddly, but much more tractable than yesterday!
