@@ -57,3 +57,10 @@ I found the second part realllly hard.
 ## Day 11
 
 A bit fiddly, but much more tractable than yesterday!
+
+## Day 12
+
+I thought I'd be dropping a star today. The first part wasn't too bad, but I
+feared the second bit was like day 8 and would require a different approach
+though. Thankfully, a flash of insight (and the use of `functools.cache`) meant
+the day was saved.
