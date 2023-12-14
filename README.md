@@ -64,3 +64,11 @@ I thought I'd be dropping a star today. The first part wasn't too bad, but I
 feared the second bit was like day 8 and would require a different approach
 though. Thankfully, a flash of insight (and the use of `functools.cache`) meant
 the day was saved.
+
+## Day 13
+
+Rather fiddly. Thought it would be really quick, ended up a bit longer. 
+
+## Day 14
+
+First part - not too bad. Second part ... nightmare.
