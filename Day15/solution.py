@@ -1,5 +1,6 @@
 import os
 import functools
+from collections import OrderedDict
 
 
 def read(part, test=False):
@@ -29,28 +30,24 @@ def calculate_part_1(test=False):
 
 def calculate_part_2(test=False):
     parts = as_parts(read(1, test=test))
-    boxes = {box_no: {} for box_no in range(256)}
+    boxes = {box_no: OrderedDict() for box_no in range(256)}
 
-    def add_or_replace(index, code, length):
-        box = boxes[get_hash(code)]
-        box[code] = (length, box.get(code, (None, index))[1])
+    def add_or_replace(instruction):
+        code, length = instruction.split("=")
+        boxes[get_hash(code)][code] = length
 
-    def remove(code):
-        box = boxes[get_hash(code)]
-        if code in box:
-            del box[code]
+    def remove(instruction):
+        code = instruction[:-1]
+        boxes[get_hash(code)].pop(code, None)
 
-    for i, part in enumerate(parts):
-        if "-" in part:
-            remove(part[:-1])
-        else:
-            add_or_replace(i, *part.split("="))
+    for part in parts:
+        (add_or_replace if "=" in part else remove)(part)
 
     def get_power(box_no):
-        in_box = sorted(boxes[box_no].values(), key=lambda e: e[1])
-        return sum((box_no + 1) * r * int(p) for r, (p, _) in enumerate(in_box, 1))
+        contents = boxes[box_no].values()
+        return sum((box_no + 1) * r * int(p) for r, p in enumerate(contents, 1))
 
-    return sum(map(get_power, range(256)))
+    return sum(map(get_power, boxes.keys()))
 
 
 for part, function, test_result in [
