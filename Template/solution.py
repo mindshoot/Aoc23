@@ -25,6 +25,8 @@ for part, function, test_result in [
 ]:
     test_answer = function(test=True)
     print(f"Part {part} (test) => {test_answer} (expecting {test_result})")
-    assert test_answer == test_result, f"Test data failing for part {part}"
+    assert (
+        test_answer == test_result
+    ), f"{test_result} != {test_answer}, test failing for part {part}"
     answer = function()
     print(f"Part {part} => {answer}")

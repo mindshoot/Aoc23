@@ -72,3 +72,7 @@ Rather fiddly. Thought it would be really quick, ended up a bit longer.
 ## Day 14
 
 First part - not too bad. Second part ... nightmare.
+
+## Day 15
+
+Palette-cleanser after day 14.
