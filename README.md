@@ -76,3 +76,8 @@ First part - not too bad. Second part ... nightmare.
 ## Day 15
 
 Palette-cleanser after day 14.
+
+## Day 16
+
+First half rather fiddly, but luckily came up with an approach that just scaled
+nicely for the second. Phew.

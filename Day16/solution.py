@@ -1,6 +1,7 @@
 import os
-import functools
-import operator
+from functools import reduce
+from itertools import chain
+from operator import or_
 
 
 directions = N, E, S, W = 1, 2, 4, 8
@@ -26,11 +27,9 @@ def read(part, test=False):
     return lines
 
 
-def parse_map_to_effects(lines, travel_direction):
+def parse_map_to_outbound(lines, d):
     def get_outbound(symbol):
-        return functools.reduce(
-            operator.or_, symbols[symbol].get(travel_direction, []), 0
-        )
+        return reduce(or_, symbols[symbol].get(d, []), 0)
 
     vals = [list(map(get_outbound, row)) for row in lines]
     return vals
@@ -42,70 +41,50 @@ def get_path(grid, srow, scol, sdir):
     return v[idx:] if sdir in (E, S) else v[idx::-1]
 
 
-m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-assert get_path(m, 1, 1, N) == [5, 2]
-assert get_path(m, 1, 1, E) == [5, 6]
-assert get_path(m, 1, 1, S) == [5, 8]
-assert get_path(m, 1, 1, W) == [5, 4]
-
-
-def show(state, queue):
-    def num_bits(num):
-        return sum(1 for d in directions if num & d > 0)
-
-    print("\n".join("".join(str(num_bits(col)) for col in row) for row in state))
-    print(f"{len(queue)}: {' '.join(f'{r},{c}->{dir_names[d]}' for r, c, d in queue)}")
-    print()
-
-
-def calculate_part_1(test=False):
-    lines = read(1, test=test)
-    maps = {d: parse_map_to_effects(lines, d) for d in (N, E, S, W)}
-    return num_energised(maps, 0, 0, E)
-
-
 def num_energised(maps, r0, c0, d0):
     state = [[0] * len(r) for r in maps[N]]
+    h, w = len(state), len(state[0])
 
     def can_move(r, c, d):
         dr, dc = deltas[d]
-        r, c = r + dr, c + dc
-        return 0 <= r < len(state) and 0 <= c < len(state[0])
+        return 0 <= r + dr < h and 0 <= c + dc < w
 
     def move(r, c, d):
         dr, dc = deltas[d]
         return r + dr, c + dc
 
-    to_trace = [(r0, c0, d0)]
     n = 0
-    while len(to_trace) > 0:
+    trace_queue = [(r0, c0, d0)]
+    while len(trace_queue) > 0:
         n += 1
-        trow, tcol, tdir = to_trace.pop()
+        trow, tcol, tdir = trace_queue.pop()
         tmap = maps[tdir]
-        for step in get_path(tmap, trow, tcol, tdir):
+        for new_directions in get_path(tmap, trow, tcol, tdir):
             state[trow][tcol] |= tdir
-            if step > 0:
-                next_dirs = (d for d in directions if can_move(trow, tcol, d))
-                for nextdir in next_dirs:
-                    nextrow, nextcol = move(trow, tcol, nextdir)
-                    if (step & ~state[nextrow][nextcol] & nextdir) == 0:
-                        continue
-                    to_trace.append((nextrow, nextcol, nextdir))
+            if new_directions > 0:
+                for ndir in (d for d in directions if can_move(trow, tcol, d)):
+                    nrow, ncol = move(trow, tcol, ndir)
+                    if (new_directions & ~state[nrow][ncol] & ndir) != 0:
+                        trace_queue.append((nrow, ncol, ndir))
                 break
             trow, tcol = move(trow, tcol, tdir)
     print(f"{r0},{c0} -> {dir_names[d0]} took {n} loops")
     return sum(1 for r in state for c in r if c > 0)
 
 
+def calculate_part_1(test=False):
+    lines = read(1, test=test)
+    maps = {d: parse_map_to_outbound(lines, d) for d in (N, E, S, W)}
+    return num_energised(maps, 0, 0, E)
+
+
 def calculate_part_2(test=False):
     lines = read(1, test=test)
-    maps = {d: parse_map_to_effects(lines, d) for d in (N, E, S, W)}
+    maps = {d: parse_map_to_outbound(lines, d) for d in (N, E, S, W)}
     h, w = len(maps[N]), len(maps[N][0])
-    starts = (
-        [(0, c, S) for c in range(w)]
-        + [(r, 0, E) for r in range(h)]
-        + [(h - 1, c, N) for c in range(w)]
-        + [(r, w - 1, W) for r in range(h)]
+    starts = chain(
+        *[[(0, c, S), (h - 1, c, N)] for c in list(range(0, h))],
+        *[[(r, 0, E), (r, w - 1, W)] for r in list(range(0, w))],
     )
     calculate = lambda x: num_energised(maps, *x)
     return max(map(calculate, starts))
