@@ -81,3 +81,7 @@ Palette-cleanser after day 14.
 
 First half rather fiddly, but luckily came up with an approach that just scaled
 nicely for the second. Phew.
+
+## Day 17
+
+UGLY. 
