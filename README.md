@@ -85,3 +85,11 @@ nicely for the second. Phew.
 ## Day 17
 
 UGLY. 
+
+## Day 18
+
+Not quite sure how much I'm actually enjoying this now..!
+
+## Day 19
+
+Beam me up.
