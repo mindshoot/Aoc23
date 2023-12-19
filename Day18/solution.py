@@ -78,10 +78,6 @@ def plot_exits(instrucs):
     grid = [[0 for _ in range(crange)] for r in range(rrange)]
     for r, c, d in transits:
         grid[r - rmin][c - cmin] |= d
-    """
-    print("Grid")
-    print("\n".join("".join("x" if c > 0 else " " for c in r) for r in grid))
-    """
     return grid
 
 
@@ -94,18 +90,6 @@ def fill_grid(grid):
             inside = inside ^ (S & transit)
             out_row.append(1 if inside | transit > 0 else 0)
         output.append(out_row)
-    """
-    print("Filled")
-    print(
-        "\n".join(
-            "".join(
-                "?" if b > 0 and f == 0 else "x" if b > 0 else "." if f > 0 else " "
-                for b, f in zip(br, fr)
-            )
-            for br, fr in zip(grid, output)
-        )
-    )
-    """
     return output
 
 
@@ -133,7 +117,8 @@ def to_polygon(instrucs):
 
 def get_polygon_area(vertices):
     """
-    NB all lines are horizontal / vertical, so don't need to worry about angles 'n stuff
+    NB all lines are horizontal / vertical, so don't need to worry about angles 'n stuff.
+    But you do want to worry about the fact the edge is 1 unit wide
     """
     distinct_rows, distinct_cols = set(), set()
     for r1, c1, r2, c2 in vertices:
@@ -145,11 +130,19 @@ def get_polygon_area(vertices):
     for firstrow, lastrow in zip(sorted_rows[:-1], sorted_rows[1:]):
         row_dims = []
         for firstcol, lastcol in zip(sorted_cols[:-1], sorted_cols[1:]):
-            cols_left = sum(1 for r1, c1, r2, c2 in vertices if c1 == c2 and c1 <= firstcol and r1 < lastrow and r2 > firstrow)
+            cols_left = sum(
+                1
+                for r1, c1, r2, c2 in vertices
+                if c1 == c2 and c1 <= firstcol and r1 < lastrow and r2 > firstrow
+            )
             if cols_left % 2 == 0:
                 row_dims.append(None)
                 continue
-            rows_above = sum(1 for r1, c1, r2, c2 in vertices if r1 == r2 and r1 <= firstrow and c1 < lastcol and c2 > firstcol)
+            rows_above = sum(
+                1
+                for r1, c1, r2, c2 in vertices
+                if r1 == r2 and r1 <= firstrow and c1 < lastcol and c2 > firstcol
+            )
             if rows_above % 2 == 0:
                 row_dims.append(None)
                 continue
@@ -159,69 +152,33 @@ def get_polygon_area(vertices):
 
     area = sum(c[0] * c[1] for r in all_dims for c in r if c is not None)
 
+    # Time to add on all those edges
     for r in range(len(all_dims)):
         for c in range(len(all_dims[0])):
             # Work out whether left (l), corner (c) and/or top (t) encroach
             le, co, to = False, False, False
             if all_dims[r][c] is None:
                 if c > 0:
-                    le = all_dims[r][c-1] is not None
+                    le = all_dims[r][c - 1] is not None
                 if r > 0:
-                    to = all_dims[r-1][c] is not None
+                    to = all_dims[r - 1][c] is not None
                 if r > 0 and c > 0:
-                    co = all_dims[r][c-1] is None and all_dims[r-1][c] is None and all_dims[r-1][c-1] is not None
+                    co = (
+                        all_dims[r][c - 1] is None
+                        and all_dims[r - 1][c] is None
+                        and all_dims[r - 1][c - 1] is not None
+                    )
             if le:
-                delta = all_dims[r][c-1][0] - 1
-                print(f"Adding {delta} on left")
+                delta = all_dims[r][c - 1][0] - 1
                 area += delta
             if to:
-                delta = all_dims[r-1][c][1] - 1
-                print(f"Adding {delta} on top")
+                delta = all_dims[r - 1][c][1] - 1
                 area += delta
             if le or to or co:
                 delta = 1
-                print(f"Adding {delta} on corner")
                 area += delta
 
     return area
-
-"""
-
-
-    # Add a strip to the right hand side for all boxes without another on their right
-    for row in all_dims:
-        for col, next_col in zip(row, row[1:]):
-            if next_col is None and col is not None:
-                area += col[0]
-
-    # Add a strip to the bottom side for all boxes without another below them
-    for c, _ in enumerate(all_dims[0]):
-        col = [r[c] for r in all_dims]
-        for row, next_row in zip(col, col[1:]):
-            if next_row is None and row is not None:
-                area += row[1]
-
-    # Add one to the bottom side for all boxes without another below them, ie
-    # count the cells that are null, and left / right is null, but above-left isn't
-
-    for r, _ in enumerate(all_dims):
-        for c, _ in enumerate(all_dims[0]):
-            if all_dims[r][c] is not None:
-                continue
-            if r == 0:
-                continue
-            if c == 0:
-                continue
-            if all_dims[r-1][c] is not None:
-                continue
-            if all_dims[r][c-1] is not None:
-                continue
-            if all_dims[r-1][c-1] is None:
-                continue
-            area += 1
-
-"""
-
 
 
 def calculate_part_2(test=False):
@@ -232,7 +189,7 @@ def calculate_part_2(test=False):
 
 
 for part, function, test_result in [
-    #(1, calculate_part_1, 62),
+    (1, calculate_part_1, 62),
     (2, calculate_part_2, 952408144115),
 ]:
     test_answer = function(test=True)
