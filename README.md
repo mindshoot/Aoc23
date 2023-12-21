@@ -93,3 +93,7 @@ Not quite sure how much I'm actually enjoying this now..!
 ## Day 19
 
 Beam me up.
+
+## Day 20
+
+Quite fun, honestly, but hadn't expected to be doing network analysis. 

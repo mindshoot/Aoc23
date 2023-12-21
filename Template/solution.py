@@ -23,10 +23,11 @@ for part, function, test_result in [
     (1, calculate_part_1, 0),
     (2, calculate_part_2, 0),
 ]:
-    test_answer = function(test=True)
-    print(f"Part {part} (test) => {test_answer} (expecting {test_result})")
-    assert (
-        test_answer == test_result
-    ), f"{test_result} != {test_answer}, test failing for part {part}"
+    if test_result is not None:
+        test_answer = function(test=True)
+        print(f"Part {part} (test) => {test_answer} (expecting {test_result})")
+        assert (
+            test_answer == test_result
+        ), f"{test_result} != {test_answer}, test failing for part {part}"
     answer = function()
     print(f"Part {part} => {answer}")
