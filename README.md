@@ -97,3 +97,11 @@ Beam me up.
 ## Day 20
 
 Quite fun, honestly, but hadn't expected to be doing network analysis. 
+
+## Day 21
+
+First half pretty easy, second half a nightmare entailing basically noticing patterns
+and realising that there's a quadratic relationship based on a cycle that happens to
+be a factor of the number of steps being searched for. Looking at the number of "tiles"
+(ie repeating boards) with different numbers, there was a relationship between that and
+the iteration number.
