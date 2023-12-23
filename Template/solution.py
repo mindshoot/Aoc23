@@ -9,6 +9,9 @@ def read(part, test=False):
     return lines
 
 
+
+
+
 def calculate_part_1(test=False):
     lines = read(1, test=test)
     return len(lines)
@@ -20,7 +23,7 @@ def calculate_part_2(test=False):
 
 
 for part, function, test_result in [
-    (1, calculate_part_1, 0),
+    (1, calculate_part_1, 5),
     (2, calculate_part_2, 0),
 ]:
     if test_result is not None:

@@ -105,3 +105,8 @@ and realising that there's a quadratic relationship based on a cycle that happen
 be a factor of the number of steps being searched for. Looking at the number of "tiles"
 (ie repeating boards) with different numbers, there was a relationship between that and
 the iteration number.
+
+## Day 22
+
+Wasted some time at the start, not noticing the z orders at the beginning. Relatively
+calm once that bit sorted though.
